@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+</head>
+
+<body class="d-flex flex-column align-items-center justify-content-between min-vw-100 min-vh-100 overflow-x-hidden">
+    <%- include('partials/header') %>
+
+    <div class="container d-flex flex-column gap-3" style="margin-bottom: 8rem;">
+        <h1 class="text-light">Suas Listas</h1>
+        <% lists.forEach(list => { %>
+            <form class="form-list d-flex align-items-center justify-content-between form-control" data-list-name="<%= list.name %>" action="/app/lists/<%= list.id %>/delete" method="post">
+                <a href="/app/lists/<%= list.id %>" class="text-decoration-none">
+                    <div class="form-list-content">
+                        <p class="m-0 text-light">
+                            <%= list.name %>
+                        </p>
+                    </div>
+                </a>
+                <button class="delete btn btn-danger" type="submit">Excluir</button>
+            </form>
+        <% }) %>
+        <a href="/app/create-form"><button class="btn btn-outline-primary">Nova Lista de Tarefas</button></a>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+
+</html>
