@@ -1,22 +1,30 @@
 const express = require('express')
+const gamesController = require('./controllers/games-controller')
 
 const app = express()
 
-const games = [
-    { id: 1, name: 'Legend of Mana', genres: ['action-rpg'], year: 1999 },
-    { id: 2, name: 'World of Warcraft', genres: ['mmorpg'], year: 2004 },
-    { id: 3, name: 'Metal Gear Solid', genres: ['stealth', 'action-adventure'], year: 1998 },
-    { id: 4, name: 'Sonic Adventure 2', genres: ['platformer'], year: 2001 },
-    { id: 5, name: 'Age of Empires 2', genres: ['real-time-strategy'], year: 1999 }
-]
+app.use(express.json())
 
 app.post('/', (req, res) => {
-    res.json({ message: "Hello World" }) // Transforma um objeto ou um array de objetos em json e envia como resposta da requisição
+    res.json({ message: "Hello World" })
 })
 
-app.get('/games', (req, res) => {
-    res.json(games)
-})
+app.get('/games', gamesController.index)
+
+app.get('/games/:id', gamesController.show)
+
+app.post('/games', gamesController.save)
+
+app.post('/games/:id/genres', gamesController.addGenre)
+
+app.put('/games/:id', gamesController.update)
+// app.patch Funcionaria de forma semelhante mas precisaria de outro contexto.
+// O Put geralmente utilizamos quando queremos editar certo recurso como um todo.
+// O Patch quando queremos "reparar", atualizar uma parte específica de um recurso.
+
+app.delete('/games/:id', gamesController.delete)
+
+app.delete('/games/:id/genres/:name', gamesController.deleteGenre)
 
 const PORT = 3000
 
